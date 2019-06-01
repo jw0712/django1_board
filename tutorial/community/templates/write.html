@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>write</title>
+  </head>
+  <body>
+    <form action="" method="post">
+      {%comment%}
+      3가지 form이 존재
+      1. Form.as_table
+      {{form.as_table}}
+      2. Form.as_p
+      {{form.as_p}}
+      3. Form.as_ul
+      {{form.as_ul}}
+      {%endcomment%}
+
+      {{form.as_p}}
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn.primary">저장</button>
+    </form>
+  </body>
+</html>

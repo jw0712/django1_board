@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>list</title>
+  </head>
+  <body>
+    <ul>
+      <li> 제목 | 저자 | 날짜 </li>
+      {%for article in articleList%}
+{{%comment%}}
+-제목에 하이퍼링크 걸고
+-view/article.pk로 해도 됨 (article.id도 되고)
+{{%endcomment%}}
+      <li><a href="/view/{{article.id}}">{{article.title}}</a> | {{article.name}} | {{article.cdate|date:"D d M Y"}}</li>
+      {%endfor%}
+    </ul>
+  </body>
+</html>

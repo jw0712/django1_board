@@ -10,10 +10,8 @@
 
     <ul>
     {%for choice in question.choice_set.all%}
-      <li>
-        {{choice.choice_text}}--{{choice.votes}} vote{{choice.votes|pluralize}}
-      </li>
-      {%endfor%}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {%endfor%}
     </ul>
     <a href="{% url 'polls:detail' question.id%}">다시 투표하시겠습니까?</a>
   </body>

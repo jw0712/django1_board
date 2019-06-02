@@ -1,29 +1,25 @@
 from django.shortcuts import render,get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Question
+from django.views import generic
 
-def index(request):
-	latest_question_list=Question.objects.order_by('-pub_date')[:5]
-	template=loader.get_template('polls/index.html')
-	context={'latest_question_list':latest_question_list,}
-	return HttpResponse(template.render(context, request))
+from .models import Question, Choice
 
-'''polls,index.html 템플릿을 불러온 후, context를 전달.
-context: 템플릿에서 쓰는 변수명과 python 객체를 연결하는 dict값'''
+class IndexView(generic.ListView):
+	template_name='polls/index.html'
+	context_object_name='latest_question_list'
 
-def detail(request, question_id):
-	try:
-		question=Question.objects.get(pk=question_id)
-	except Question.DoesNotExist:
-		raise Http404("질문이 존재하지 않습니다")
-	return render(request,'polls/detail.html',{'question':question})
+	def get_queryset(self):
+		"""최신 5개 질문만 반환"""
+		return Question.objects.order_by('-pub_date')[:5]
 
-def results(request, question_id):
-	question=get_object_or_404(Question, pk=question_id)
-	return render(request, 'polls/results.html', {'question':question})
+class DetailView(generic.DetailView):
+	model=Question
+	template_name='polls/detail.html'
+
+class ResultsView(generic.DetailView):
+	model=Question
+	template_name='polls/results.html'
 
 def vote(request, question_id):
 	question=get_object_or_404(Question, pk=question_id)
